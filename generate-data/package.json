@@ -1,0 +1,16 @@
+{
+  "name": "generate-data",
+  "version": "1.0.0",
+  "description": "",
+  "main": "generate.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "generate": "node generate.js"
+  },
+  "author": "youssef maghzaz",
+  "license": "MIT",
+  "dependencies": {
+    "faker": "^4.1.0",
+    "json2csv": "^4.5.2"
+  }
+}
