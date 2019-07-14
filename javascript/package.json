@@ -1,0 +1,14 @@
+{
+  "name": "aws-pipeline",
+  "version": "1.0.0",
+  "description": "",
+  "main": "pipeline.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "youssef maghzaz",
+  "license": "MIT",
+  "dependencies": {
+    "aws-sdk": "^2.493.0"
+  }
+}
