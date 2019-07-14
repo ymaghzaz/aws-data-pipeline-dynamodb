@@ -1,22 +1,27 @@
 const AWS = require("aws-sdk");
 const converter = require("aws-sdk/lib/dynamodb/converter");
-
-const d = {
-  id: "48.2_2.4_644",
-  id_p: "48.2_2.4",
-  id_n: "644",
-  lat: "48.2",
-  lng: "2.4",
-  data: [
-    { k: "1", s: "1" },
-    { k: "2", s: "2" },
-    { k: "3", s: "3" },
-    { k: "4", s: "4" },
-    { k: "5", s: "5" },
-    { k: "6", s: "6" }
-  ]
+const usersData = require("../data/data.json");
+const fs = require("fs");
+const replaceObjectName = data => {
+  data = data.replace(/"M"/g, '"m"');
+  data = data.replace(/"L"/g, '"l"');
+  data = data.replace(/"S"/g, '"s"');
+  data = data.replace(/"N"/g, '"n"');
+  return data;
 };
 
-let data = converter.input(d);
+const converterToDynamodbFormat = data => {
+  const convertedData = converter.input(data)["M"];
+  const JsonData = JSON.stringify(convertedData);
+  return replaceObjectName(JsonData);
+};
 
-console.log("data", JSON.stringify(data));
+try {
+  var wstream = fs.createWriteStream("../data-pipeline/datajson.txt");
+  usersData.map(user => {
+    wstream.write(converterToDynamodbFormat(user));
+    wstream.write("\n");
+  });
+} catch (err) {
+  console.error(err);
+}
