@@ -1,14 +1,21 @@
 const faker = require("faker");
 const fs = require("fs");
 
-let users = [];
-for (let i = 0; i < 10; i++) {
-  var { posts, accountHistory, ...card } = faker.helpers.createCard();
-  users.push(card);
-}
+const generateUserData = number => {
+  let users = [];
+  for (let i = 0; i < number; i++) {
+    var { posts, accountHistory, ...card } = faker.helpers.createCard();
+    users.push(card);
+  }
+  return users;
+};
 
 try {
-  fs.writeFile("../data/data.json", JSON.stringify(users), console.log);
+  fs.writeFile(
+    "../data/data.json",
+    JSON.stringify(generateUserData(10)),
+    console.log
+  );
 } catch (err) {
   console.error(err);
 }
@@ -16,6 +23,7 @@ try {
 const { parse } = require("json2csv");
 
 try {
+  let users = generateUserData(10);
   let csv_users = users.map(user => {
     let { company, address, ...userInfo } = user;
     return userInfo;
